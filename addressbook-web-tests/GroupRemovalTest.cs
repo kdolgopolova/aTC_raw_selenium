@@ -3,16 +3,18 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class GroupRemovalTests : TestBase
     {
+       
         [Test]
-        public void ContactCreationTest()
+        public void TheGroupRemovalTest()
         {
             OpenHomePage();
             Login(new AccountData("admin", "secret"));
-            GoToNewContactPage();
-            FillContactForm(new ContactData("Ksenia", "Dolgopolova"));
-            SubmitContactForm();
+            GoToGroupsPage();
+            SelectGroup(1);
+            RemoveGroup();
+            ReturnToGroupsPage();
             Logout();
         }
     }
