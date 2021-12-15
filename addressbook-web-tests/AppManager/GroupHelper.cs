@@ -1,19 +1,57 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
     public class GroupHelper : HelperBase
     {
-        public GroupHelper(IWebDriver driver) : 
-            base(driver)
+        public GroupHelper(ApplicationManager manager) :
+            base(manager)
         {
 
         }
+
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            CreateNewGroup();
+            FillGroupForm(group);
+            SubmitGroupForm();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        internal GroupHelper Modify(int a, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(a);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        private GroupHelper SubmitGroupModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        private GroupHelper InitGroupModification()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper Remove(int a)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(a);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();

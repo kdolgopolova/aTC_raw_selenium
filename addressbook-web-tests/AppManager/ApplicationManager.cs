@@ -8,7 +8,7 @@ namespace addressbook_web_tests
 {
     public class ApplicationManager
     {
-        protected IWebDriver driver;
+        private IWebDriver driver;
         protected string baseURL;
 
         private LoginHelper loginHelper;
@@ -20,10 +20,10 @@ namespace addressbook_web_tests
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook";
 
-            loginHelper = new LoginHelper(driver);
-            navigationHelper = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigationHelper = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
         }
 
         public void Stop()
@@ -41,7 +41,6 @@ namespace addressbook_web_tests
         public NavigationHelper Navigator { get => navigationHelper; set => navigationHelper = value; }
         public GroupHelper Groups { get => groupHelper; set => groupHelper = value; }
         public ContactHelper Contacts { get => contactHelper; set => contactHelper = value; }
-
-
+        public IWebDriver Driver { get => driver; set => driver = value; }
     }
 }

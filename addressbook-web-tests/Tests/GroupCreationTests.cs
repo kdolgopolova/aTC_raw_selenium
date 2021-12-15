@@ -8,14 +8,17 @@ namespace addressbook_web_tests
         [Test]
         public void GroupCreationTest()
         {
-            appManager.Navigator.GoToHomePage();
-            appManager.Auth.Login(new AccountData("admin", "secret"));
-            appManager.Navigator.GoToGroupsPage();
-            appManager.Groups
-                .CreateNewGroup()
-                .FillGroupForm(new GroupData("abc", "123", "cde"))
-                .SubmitGroupForm()
-                .ReturnToGroupsPage();
+            GroupData group = new GroupData("abc", "123", "cde");
+            appManager.Groups.Create(group);
+            appManager.Auth.Logout();
+        }
+
+        [Test]
+        public void EmptyGroupCreationTest()
+        {
+            GroupData group = new GroupData("", "", "");
+            appManager.Groups.Create(group);
+            appManager.Auth.Logout();
         }
     }
 }
