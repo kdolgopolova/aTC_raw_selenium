@@ -8,9 +8,16 @@ namespace addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
-            appManager.Navigator.GoToNewContactPage();
-            appManager.Contacts.FillContactForm(new ContactData("Ksenia", "Dolgopolova"));
-            appManager.Contacts.SubmitContactForm();
+            ContactData newData = new ContactData("Ivan", "Petrov");
+            appManager.Contacts.Create(newData);
+            appManager.Auth.Logout();
+        }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData newData = new ContactData("", "");
+            appManager.Contacts.Create(newData);
             appManager.Auth.Logout();
         }
     }

@@ -1,9 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
@@ -15,6 +10,7 @@ namespace addressbook_web_tests
         {
             GroupData group = new GroupData("234", "qwe", "456");
             appManager.Groups.Modify(1, group);
+            appManager.Auth.Logout();
         }
     }
 }
