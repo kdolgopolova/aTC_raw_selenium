@@ -23,10 +23,10 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData)
+        public ContactHelper Modify(ContactData newData, int contactNumber)
         {
             manager.Navigator.GoToHomePage();
-            InitContactModification();
+            InitContactModification(contactNumber);
             FillContactForm(newData);
             UpdateContact();
             manager.Navigator.GoToHomePage();
@@ -36,7 +36,7 @@ namespace addressbook_web_tests
         public ContactHelper Remove(int a)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(a.ToString());
+            SelectContact(a);
             RemoveContact();
             return this;
         }
@@ -47,9 +47,9 @@ namespace addressbook_web_tests
             return this;
         }
 
-        private ContactHelper SelectContact(string a)
+        private ContactHelper SelectContact(int a)
         {
-            driver.FindElement(By.Id(a)).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{a + 1}]/td")).Click();
             return this;
         }
         private ContactHelper RemoveContact()
@@ -59,10 +59,9 @@ namespace addressbook_web_tests
             return this;
         }
 
-        // TODO: implement choosing of contact to edit
-        private ContactHelper InitContactModification()
+        private ContactHelper InitContactModification(int a)
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{a + 1}]/td[8]")).Click();
             return this;
         }
 

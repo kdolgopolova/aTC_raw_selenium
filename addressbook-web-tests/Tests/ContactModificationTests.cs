@@ -8,8 +8,8 @@ namespace addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("Oleg", "Sidorov");
-            appManager.Contacts.Modify(newData);
+            ContactData newData = new ContactData("Aaa", "Saaaav");
+            appManager.Contacts.Modify(newData,1);
         }
     }
 }
