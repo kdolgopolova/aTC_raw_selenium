@@ -3,22 +3,22 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupCreationTests : AuthTestBase
     {
         [Test]
         public void GroupCreationTest()
         {
             GroupData group = new GroupData("abc", "123", "cde");
-            appManager.Groups.Create(group);
-            appManager.Auth.Logout();
+            app.Groups.Create(group);
+
         }
 
         [Test]
         public void EmptyGroupCreationTest()
         {
             GroupData group = new GroupData("", "", "");
-            appManager.Groups.Create(group);
-            appManager.Auth.Logout();
+            app.Groups.Create(group);
+            
         }
     }
 }

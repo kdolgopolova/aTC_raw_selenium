@@ -3,13 +3,13 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
             ContactData newData = new ContactData("Aaa", "Saaaav");
-            appManager.Contacts.Modify(newData,1);
+            app.Contacts.Modify(newData,1);
         }
     }
 }

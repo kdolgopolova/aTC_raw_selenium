@@ -3,22 +3,20 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class ContactCreationTests : AuthTestBase
     {
         [Test]
         public void ContactCreationTest()
         {
             ContactData newData = new ContactData("Ivan", "Petrov");
-            appManager.Contacts.Create(newData);
-            appManager.Auth.Logout();
+            app.Contacts.Create(newData);
         }
 
         [Test]
         public void EmptyContactCreationTest()
         {
             ContactData newData = new ContactData("", "");
-            appManager.Contacts.Create(newData);
-            appManager.Auth.Logout();
+            app.Contacts.Create(newData);
         }
     }
 }

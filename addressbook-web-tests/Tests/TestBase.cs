@@ -1,26 +1,18 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using System;
 using System.Text;
 
 namespace addressbook_web_tests
 {
     public class TestBase
     {
-        protected ApplicationManager appManager;
+        protected ApplicationManager app;
 
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
-            appManager = new ApplicationManager();
-            appManager.Navigator.GoToHomePage();
-            appManager.Auth.Login(new AccountData("admin", "secret"));
+            app = ApplicationManager.GetInstance();
         }
-
-        [TearDown]
-        public void TeardownTest()
-        {
-            appManager.Stop();
-        }
-
     }
 }

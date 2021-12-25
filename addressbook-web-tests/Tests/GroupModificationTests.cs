@@ -3,14 +3,13 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class GroupModificationTests : TestBase
+    public class GroupModificationTests : AuthTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
-            GroupData group = new GroupData("234", "qwe", "456");
-            appManager.Groups.Modify(1, group);
-            appManager.Auth.Logout();
+            GroupData group = new GroupData(null, "OneTwoThree", "ChetirePyatShest");
+            app.Groups.Modify(1, group);
         }
     }
 }
