@@ -23,7 +23,7 @@ namespace addressbook_web_tests
         }
 
         [Test]
-        public void LoginWithInValidCredentials()
+        public void LoginWithInvalidCredentials()
         {
             AccountData accountData = new AccountData("admin", "superSecret");
             app.Auth.Logout();
