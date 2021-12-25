@@ -89,5 +89,13 @@ namespace addressbook_web_tests
             driver.FindElement(By.XPath($"//div[@id='content']/form/span[{index}]/input")).Click();
             return this;
         }
+        
+        public void AddUntilGroupIsPresent(int index)
+        {
+            while (!IsElementPresent(By.XPath($"//div[@id='content']/form/span[{index}]/input")))
+            {
+                Create(new GroupData(""));
+            }
+        }
     }
 }

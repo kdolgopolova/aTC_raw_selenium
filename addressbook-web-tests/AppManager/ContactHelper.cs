@@ -23,7 +23,7 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData, int contactNumber)
+        public ContactHelper Modify(int contactNumber, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(contactNumber);
@@ -59,9 +59,9 @@ namespace addressbook_web_tests
             return this;
         }
 
-        private ContactHelper InitContactModification(int a)
+        private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{a + 1}]/td[8]")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[8]")).Click();
             return this;
         }
 
@@ -72,5 +72,13 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public void AddUntilContactIsPresent(int index)
+        {
+            while (!IsElementPresent(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td")))
+            {
+                Create(new ContactData("Automatic", "Creation"));
+                manager.Navigator.GoToHomePage();
+            }
+        }
     }
 }

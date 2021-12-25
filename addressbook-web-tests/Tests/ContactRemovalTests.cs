@@ -8,7 +8,9 @@ namespace addressbook_web_tests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.Remove(1);
+            int indexToRemove = 4;
+            app.Contacts.AddUntilContactIsPresent(indexToRemove);
+            app.Contacts.Remove(indexToRemove);
         }
     }
 }

@@ -8,8 +8,10 @@ namespace addressbook_web_tests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData group = new GroupData(null, "OneTwoThree", "ChetirePyatShest");
-            app.Groups.Modify(1, group);
+            GroupData group = new GroupData("autocreation", "OneTwoThree", "ChetirePyatShest");
+            int indexToModify = 6;
+            app.Groups.AddUntilGroupIsPresent(indexToModify);
+            app.Groups.Modify(indexToModify, group);
         }
     }
 }

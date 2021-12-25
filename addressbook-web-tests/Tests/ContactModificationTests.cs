@@ -9,7 +9,9 @@ namespace addressbook_web_tests
         public void ContactModificationTest()
         {
             ContactData newData = new ContactData("Aaa", "Saaaav");
-            app.Contacts.Modify(newData,1);
+            int indexToModify = 6;
+            app.Contacts.AddUntilContactIsPresent(indexToModify);
+            app.Contacts.Modify(indexToModify, newData);
         }
     }
 }

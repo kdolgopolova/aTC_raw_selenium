@@ -9,7 +9,9 @@ namespace addressbook_web_tests
         [Test]
         public void GroupRemovalTest()
         {
-            app.Groups.Remove(1);
+            int indexToRemove = 3;
+            app.Groups.AddUntilGroupIsPresent(indexToRemove);
+            app.Groups.Remove(indexToRemove);
         }
     }
 }
