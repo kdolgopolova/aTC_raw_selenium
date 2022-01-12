@@ -40,7 +40,8 @@ namespace addressbook_web_tests
         {
             if (IsLoggedIn())
             {
-                driver.FindElement(By.Name("logout")).Click();
+                driver.FindElement(By.Name("logout")).FindElement(By.TagName("a")).Click();
+                driver.FindElement(By.Name("user"));
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace addressbook_web_tests
 {
@@ -47,10 +48,28 @@ namespace addressbook_web_tests
             return this;
         }
 
-        private ContactHelper SelectContact(int a)
+        private ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{a + 1}]/td")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td")).Click();
             return this;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contactList = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+
+            ICollection<IWebElement> webContactElements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+
+            foreach (var element in webContactElements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                IWebElement lastName = cells[1];
+                IWebElement firstName = cells[2];
+                contactList.Add(new ContactData(lastName.Text, firstName.Text));
+            }
+
+            return contactList;
         }
         private ContactHelper RemoveContact()
         {

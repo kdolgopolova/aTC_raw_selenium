@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using System;
+using System.Collections.Generic;
 
 namespace addressbook_web_tests
 {
@@ -18,6 +20,21 @@ namespace addressbook_web_tests
             SubmitGroupForm();
             ReturnToGroupsPage();
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> webGroupElements = driver.FindElements(By.CssSelector("span.group"));
+
+            foreach (var element in webGroupElements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
         }
 
         internal GroupHelper Modify(int a, GroupData newData)
@@ -86,13 +103,13 @@ namespace addressbook_web_tests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath($"//div[@id='content']/form/span[{index}]/input")).Click();
+            driver.FindElement(By.XPath($"//div[@id='content']/form/span[{index + 1}]/input")).Click();
             return this;
         }
         
         public void AddUntilGroupIsPresent(int index)
         {
-            while (!IsElementPresent(By.XPath($"//div[@id='content']/form/span[{index}]/input")))
+            while (!IsElementPresent(By.XPath($"//div[@id='content']/form/span[{index + 1}]/input")))
             {
                 Create(new GroupData(""));
             }
