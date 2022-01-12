@@ -9,13 +9,15 @@ namespace addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData newData = new ContactData("Ivan", "Petrov");
+            ContactData newData = new ContactData("Maksimov", "Maksim");
             List<ContactData> oldList = app.Contacts.GetContactList();
 
             app.Contacts.Create(newData);
             List<ContactData> newList = app.Contacts.GetContactList();
-
-            Assert.AreEqual(oldList.Count, newList.Count - 1);
+            oldList.Add(newData);
+            oldList.Sort();
+            newList.Sort();
+            Assert.AreEqual(oldList, newList);
         }
 
         [Test]
@@ -26,8 +28,10 @@ namespace addressbook_web_tests
 
             app.Contacts.Create(newData);
             List<ContactData> newList = app.Contacts.GetContactList();
-
-            Assert.AreEqual(oldList.Count, newList.Count - 1);
+            oldList.Add(newData);
+            oldList.Sort();
+            newList.Sort();
+            Assert.AreEqual(oldList, newList);
         }
     }
 }

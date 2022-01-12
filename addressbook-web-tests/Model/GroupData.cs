@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace addressbook_web_tests
 {
-    public class GroupData : IEquatable<GroupData>
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         private string name;
         private string header;
@@ -22,7 +23,7 @@ namespace addressbook_web_tests
 
         public bool Equals(GroupData group)
         {
-            if (Object.ReferenceEquals(group, null))
+            if (group is null)
             {
                 return false;
             }
@@ -33,10 +34,25 @@ namespace addressbook_web_tests
             return Name == group.Name;
         }
 
-        public new int GetHashCode()
+        public override int GetHashCode()
         {
             return Name.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}";
+        }
+
+        public int CompareTo(GroupData other)
+        {
+            if (other is null)
+            {
+                return 1;
+            }
+            return Name.CompareTo(other.Name);
+        }
+
         public string Name { get => name; set => name = value; }
         public string Header { get => header; set => header = value; }
         public string Footer { get => footer; set => footer = value; }

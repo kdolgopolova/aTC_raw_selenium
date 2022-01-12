@@ -17,7 +17,6 @@ namespace addressbook_web_tests
             oldList.RemoveAt(indexToRemove - 1);
 
             List<ContactData> newList = app.Contacts.GetContactList();
-            System.Console.WriteLine($"{oldList.Count} + {newList.Count}");
             Assert.AreEqual(oldList, newList);
 
         }

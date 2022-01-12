@@ -17,12 +17,12 @@ namespace addressbook_web_tests
         private NavigationHelper navigationHelper;
         private GroupHelper groupHelper;
         private ContactHelper contactHelper;
-        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+        private static readonly ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             baseURL = "http://localhost/addressbook";
 
             loginHelper = new LoginHelper(this);

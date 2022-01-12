@@ -19,7 +19,7 @@ namespace addressbook_web_tests
         public ContactHelper Create(ContactData data)
         {
             manager.Navigator.GoToNewContactPage();
-            manager.Contacts.FillContactForm(new ContactData(data.FirstName, data.LastName));
+            manager.Contacts.FillContactForm(new ContactData(data.LastName, data.FirstName));
             manager.Contacts.SubmitContactForm();
             return this;
         }
@@ -75,6 +75,7 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            driver.FindElement(By.CssSelector("div.msgbox"));
             return this;
         }
 
