@@ -9,21 +9,33 @@ namespace addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("Changed", "Automatically");
+            ContactData contactData = new ContactData("Automatically", "Changed");
             int indexToModify = 4;
+
             app.Contacts.AddUntilContactIsPresent(indexToModify);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData oldContactData = oldContacts[indexToModify-1];
 
-            List<ContactData> oldList = app.Contacts.GetContactList();
+            app.Contacts.Modify(indexToModify, contactData);
 
-            app.Contacts.Modify(indexToModify, newData);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
-            List<ContactData> newList = app.Contacts.GetContactList();
-            oldList[indexToModify-1].FirstName = newData.FirstName;
-            oldList[indexToModify-1].LastName = newData.LastName;
-            oldList.Sort();
-            newList.Sort();
-            Assert.AreEqual(oldList, newList);
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[indexToModify-1].FirstName = contactData.FirstName;
+            oldContacts[indexToModify-1].LastName = contactData.LastName;
 
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
+
+            foreach(var contact in newContacts)
+            {
+                if (contact.Id == oldContactData.Id)
+                {
+                    Assert.AreEqual($"{contactData.LastName} {contactData.FirstName}", $"{contact.LastName} {contact.FirstName}");
+                }
+            }
         }
     }
 }

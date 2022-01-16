@@ -13,6 +13,9 @@ namespace addressbook_web_tests
             List<ContactData> oldList = app.Contacts.GetContactList();
 
             app.Contacts.Create(newData);
+
+            Assert.AreEqual(oldList.Count + 1, app.Contacts.GetContactCount());
+
             List<ContactData> newList = app.Contacts.GetContactList();
             oldList.Add(newData);
             oldList.Sort();
@@ -27,6 +30,9 @@ namespace addressbook_web_tests
             List<ContactData> oldList = app.Contacts.GetContactList();
 
             app.Contacts.Create(newData);
+
+            Assert.AreEqual(oldList.Count + 1, app.Contacts.GetContactCount());
+
             List<ContactData> newList = app.Contacts.GetContactList();
             oldList.Add(newData);
             oldList.Sort();

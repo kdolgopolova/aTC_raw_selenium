@@ -9,16 +9,26 @@ namespace addressbook_web_tests
         [Test]
         public void ContactRemovalTest()
         {
-            int indexToRemove = 7;
+            int indexToRemove = 4;
             app.Contacts.AddUntilContactIsPresent(indexToRemove);
-            List <ContactData> oldList = app.Contacts.GetContactList();
+
+            List <ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData contactToRemove = oldContacts[indexToRemove];
 
             app.Contacts.Remove(indexToRemove);
-            oldList.RemoveAt(indexToRemove - 1);
 
-            List<ContactData> newList = app.Contacts.GetContactList();
-            Assert.AreEqual(oldList, newList);
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
+            oldContacts.RemoveAt(indexToRemove);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+
+            Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (var contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, contactToRemove.Id);
+            }
         }
     }
 }

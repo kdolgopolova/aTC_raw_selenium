@@ -12,6 +12,7 @@ namespace addressbook_web_tests
         private string middleName;
         private string lastName;
         private string company;
+        private string id;
 
         public ContactData(string lastName, string firstName)
         {
@@ -60,9 +61,11 @@ namespace addressbook_web_tests
             string actual = $"{other.lastName} {other.firstName}";
             return expected.CompareTo(actual);
         }
+
         public string FirstName { get => firstName; set => firstName = value; }
         public string MiddleName { get => middleName; set => middleName = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public string Company { get => company; set => company = value; }
+        public string Id { get => id; set => id = value; }
     }
 }

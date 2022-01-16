@@ -9,20 +9,31 @@ namespace addressbook_web_tests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData group = new GroupData("autocreation", "OneTwoThr", "ChetirePyatShest");
+            GroupData groupData = new GroupData("autocreation", "OneTwoThr", "ChetirePyatShest");
             int indexToModify = 6;
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
             app.Groups.AddUntilGroupIsPresent(indexToModify);
-            app.Groups.Modify(indexToModify, group);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldGroupData = oldGroups[indexToModify];
+
+            app.Groups.Modify(indexToModify, groupData);
+
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[indexToModify].Name = group.Name;
+            oldGroups[indexToModify].Name = groupData.Name;
             oldGroups.Sort();
             newGroups.Sort();
 
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (var group in newGroups)
+            {
+                if (group.Id == oldGroupData.Id)
+                {
+                    Assert.AreEqual(groupData.Name, group.Name);
+                }
+            }
         }
     }
 }

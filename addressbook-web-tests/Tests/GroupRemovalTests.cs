@@ -14,13 +14,22 @@ namespace addressbook_web_tests
             app.Groups.AddUntilGroupIsPresent(indexToRemove);
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData groupToRemove = oldGroups[indexToRemove];
 
             app.Groups.Remove(indexToRemove);
+
+            Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
+
             oldGroups.RemoveAt(indexToRemove);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
+
             Assert.AreEqual(oldGroups, newGroups);
-  
+            
+            foreach(GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, groupToRemove.Id);
+            }
         }
     }
 }

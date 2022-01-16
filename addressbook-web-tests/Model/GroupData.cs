@@ -8,6 +8,7 @@ namespace addressbook_web_tests
         private string name;
         private string header;
         private string footer;
+        private string id;
 
         public GroupData(string name)
         {
@@ -56,6 +57,8 @@ namespace addressbook_web_tests
         public string Name { get => name; set => name = value; }
         public string Header { get => header; set => header = value; }
         public string Footer { get => footer; set => footer = value; }
+
+        public string Id { get => id; set => id = value; }
     }
 
 
