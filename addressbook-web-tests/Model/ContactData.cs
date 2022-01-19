@@ -6,7 +6,9 @@ namespace addressbook_web_tests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
+
         private string allEmails;
+
         public ContactData(string lastName, string firstName)
         {
             FirstName = firstName;

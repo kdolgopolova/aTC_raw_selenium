@@ -31,6 +31,49 @@ namespace addressbook_web_tests
                 AllEmails = allEmails,
             };
         }
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContactProperties(index);
+
+            string[] fullName = driver.FindElement(By.XPath("//div[@id='content']/b")).Text.Split(' ');
+            string lastName = fullName[2];
+            string middleName = fullName[1];
+            string firstName = fullName[0];
+
+            string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
+            string address = allData[2];
+
+            string homePhone = Regex.Replace(allData[6], @"[()H: -]", "");
+            string mobilePhone = Regex.Replace(allData[8], @"[()M: -]", "");
+            string workPhone = Regex.Replace(allData[10], @"[()W: -]", "");
+
+            string email = allData[14];
+            string email2 = allData[16];
+            string email3 = allData[18];
+            string allPhones = $"{homePhone}\r\n{mobilePhone}\r\n{workPhone}";
+            string allEmails = $"{email}\r\n{email2}\r\n{email3}";
+
+            return new ContactData(firstName, lastName)
+            {
+                MiddleName = middleName,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
+                AllEmails = allEmails,
+                AllPhones = allPhones,
+            };
+        }
+
+        public ContactHelper SelectContactProperties(int index)
+        {
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[7]")).Click();
+            return this;
+        }
 
         public ContactData GetContactInformationFromForm(int index)
         {
@@ -49,6 +92,9 @@ namespace addressbook_web_tests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
+            string allPhones = Regex.Replace($"{homePhone}\r\n{mobilePhone}\r\n{workPhone}", @"[() -]", "");
+            string allEmails = $"{email}\r\n{email2}\r\n{email3}";
+
             return new ContactData(firstName, lastName)
             {
                 MiddleName = middleName,
@@ -59,6 +105,8 @@ namespace addressbook_web_tests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
+                AllPhones = allPhones,
+                AllEmails = allEmails,
             };
         }
 
