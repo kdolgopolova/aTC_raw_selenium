@@ -40,10 +40,24 @@ namespace addressbook_web_tests
 
                 foreach (var element in elements)
                 {
-                    groupCache.Add(new GroupData(element.Text)
+                    groupCache.Add(new GroupData(null)
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
+                }
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[i].Name = "";
+                    }
+                    else 
+                    {
+                        groupCache[i].Name = parts[i-shift].Trim();
+                    }
                 }
                 
             }

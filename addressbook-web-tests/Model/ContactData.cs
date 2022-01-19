@@ -1,31 +1,87 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace addressbook_web_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstName;
-        private string middleName;
-        private string lastName;
-        private string company;
-        private string id;
-
+        private string allPhones;
+        private string allEmails;
         public ContactData(string lastName, string firstName)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            FirstName = firstName;
+            LastName = lastName;
         }
 
         public ContactData(string firstName, string middleName, string lastName, string company)
         {
-            this.firstName = firstName;
-            this.middleName = middleName;
-            this.lastName = lastName;
-            this.company = company;
+            FirstName = firstName;
+            MiddleName = middleName;
+            LastName = lastName;
+            Company = company;
+        }
+
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Company { get; set; }
+        public string Address { get; set; }
+        public string Id { get; set; }
+        public string HomePhone { get; set; }
+        public string MobilePhone { get; set; }
+        public string WorkPhone { get; set; }
+        public string Email { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+
+            set
+            {
+                allPhones = value;
+            }
+        }
+        public string AllEmails 
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return $"{Email}\r\n{Email2}\r\n{Email3}".Trim();
+                }
+            }
+
+            set
+            {
+                allEmails = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            else
+            {
+                return Regex.Replace(phone, "[ -{}]", "") + "\r\n";
+            }
         }
 
         public bool Equals(ContactData contact)
@@ -38,17 +94,17 @@ namespace addressbook_web_tests
             {
                 return true;
             }
-            return firstName == contact.firstName & lastName == contact.lastName;
+            return FirstName == contact.FirstName & LastName == contact.LastName;
         }
 
         public override int GetHashCode()
         {
-            return firstName.GetHashCode();
+            return FirstName.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"Last Name: {lastName}, First Name: {firstName}";
+            return $"Last Name: {LastName}, First Name: {FirstName}";
         }
 
         public int CompareTo(ContactData other)
@@ -57,15 +113,9 @@ namespace addressbook_web_tests
             {
                 return 1;
             }
-            string expected = $"{lastName} {firstName}";
-            string actual = $"{other.lastName} {other.firstName}";
+            string expected = $"{LastName} {FirstName}";
+            string actual = $"{other.LastName} {other.FirstName}";
             return expected.CompareTo(actual);
         }
-
-        public string FirstName { get => firstName; set => firstName = value; }
-        public string MiddleName { get => middleName; set => middleName = value; }
-        public string LastName { get => lastName; set => lastName = value; }
-        public string Company { get => company; set => company = value; }
-        public string Id { get => id; set => id = value; }
     }
 }
