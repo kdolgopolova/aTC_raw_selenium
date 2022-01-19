@@ -108,6 +108,7 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.Name("submit")).Click();
             groupCache = null;
+            driver.FindElement(By.CssSelector("div.msgbox"));
             return this;
         }
 
