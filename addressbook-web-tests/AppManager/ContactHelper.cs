@@ -36,11 +36,6 @@ namespace addressbook_web_tests
             manager.Navigator.GoToHomePage();
             SelectContactProperties(index);
 
-            //string[] fullName = driver.FindElement(By.XPath("//div[@id='content']/b")).Text.Split(' ');
-            //string lastName = fullName[2];
-            //string middleName = fullName[1];
-            //string firstName = fullName[0];
-
             string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
             string[] fullName = allData[0].Split(' ');
             string lastName = fullName[2];
