@@ -9,7 +9,7 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactInformation() 
         {
-            int indexToVerify = 8;
+            int indexToVerify = 5;
             ContactData dataFromTable = app.Contacts.GetContactInformationFromTable(indexToVerify);
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
 
@@ -22,14 +22,14 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactDetails()
         {
-            int indexToVerify = 8;
-            ContactData dataFromTable = app.Contacts.GetContactInformationFromTable(indexToVerify);
+            int indexToVerify = 5;
+            ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
             ContactData dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
 
-            Assert.AreEqual(dataFromTable, dataFromDetails);
-            Assert.AreEqual(dataFromTable.Address, dataFromDetails.Address);
-            Assert.AreEqual(dataFromTable.AllPhones, dataFromDetails.AllPhones);
-            Assert.AreEqual(dataFromTable.AllEmails, dataFromDetails.AllEmails);
+            Assert.AreEqual(dataFromEditForm, dataFromDetails);
+            Assert.AreEqual(dataFromEditForm.Address, dataFromDetails.Address);
+            Assert.AreEqual(dataFromEditForm.AllPhones, dataFromDetails.AllPhones);
+            Assert.AreEqual(dataFromEditForm.AllEmails, dataFromDetails.AllEmails);
 
         }
 

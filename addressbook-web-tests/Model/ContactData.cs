@@ -23,6 +23,13 @@ namespace addressbook_web_tests
             Company = company;
         }
 
+        public ContactData(string lastName, string firstName, string middleName)
+        {
+            FirstName = firstName;
+            MiddleName = middleName;
+            LastName = lastName;
+        }
+
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }

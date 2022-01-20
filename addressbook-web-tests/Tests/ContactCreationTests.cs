@@ -12,7 +12,7 @@ namespace addressbook_web_tests
 
             for (int i = 0; i < 5; i++)
             {
-                contacts.Add(new ContactData(GenerateRandomString(10), (GenerateRandomString(10))));
+                contacts.Add(new ContactData(GenerateRandomString(10), GenerateRandomString(10), GenerateRandomString(10)));
             }
             return contacts;
         }
