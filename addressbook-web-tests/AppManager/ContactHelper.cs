@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace addressbook_web_tests
@@ -16,7 +17,7 @@ namespace addressbook_web_tests
         public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();
-            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index-1]
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index - 1]
                 .FindElements(By.TagName("td"));
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
@@ -36,22 +37,28 @@ namespace addressbook_web_tests
             manager.Navigator.GoToHomePage();
             SelectContactProperties(index);
 
+            string allDataString = driver.FindElement(By.CssSelector("div#content")).Text;
+            allDataString = allDataString.Replace("H:", "");
+            allDataString = allDataString.Replace("W:", "");
+            allDataString = allDataString.Replace("M:", "");
             string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
-            string[] fullName = allData[0].Split(' ');
-            string lastName = fullName[2];
-            string middleName = fullName[1];
-            string firstName = fullName[0];
-            string address = allData[2];
 
-            string homePhone = Regex.Replace(allData[6], @"[()H: -]", "");
-            string mobilePhone = Regex.Replace(allData[8], @"[()M: -]", "");
-            string workPhone = Regex.Replace(allData[10], @"[()W: -]", "");
+            string[] fullName = allData[0].Split(' ').ToArray();
+            string lastName = fullName.ElementAtOrDefault(2)== null? " " : fullName[2];
+            string middleName = fullName.ElementAtOrDefault(1) == null ? " " : fullName[1];
+            string firstName = fullName.ElementAtOrDefault(0) == null ? " " : fullName[0];
 
-            string email = allData[14];
-            string email2 = allData[16];
-            string email3 = allData[18];
+            string address = allData.ElementAtOrDefault(2) == null? "" : allData[2];
 
-            return new ContactData(firstName, lastName)
+            string homePhone = allData.ElementAtOrDefault(6) == null? "" : Regex.Replace(allData[6], @"[A-Za-z(): -]", "");
+            string mobilePhone = allData.ElementAtOrDefault(8) == null ? "" : Regex.Replace(allData[8], @"[A-Za-z(): -]", "");
+            string workPhone = allData.ElementAtOrDefault(10) == null ? "" : Regex.Replace(allData[10], @"[A-Za-z(): -]", "");
+
+            string email = allData.ElementAtOrDefault(14) == null ? "" : allData[14];
+            string email2 = allData.ElementAtOrDefault(16) == null ? "" : allData[16];
+            string email3 = allData.ElementAtOrDefault(18) == null ? "" : allData[18];
+
+            return new ContactData(lastName, firstName)
             {
                 MiddleName = middleName,
                 Address = address,
@@ -61,10 +68,11 @@ namespace addressbook_web_tests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
+                AllData = Regex.Replace(allDataString, @"[ \r\n ]", ""),
             };
         }
 
-        public ContactHelper SelectContactProperties(int index)
+    public ContactHelper SelectContactProperties(int index)
         {
             driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[7]")).Click();
             return this;
@@ -87,7 +95,7 @@ namespace addressbook_web_tests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            return new ContactData(firstName, lastName)
+            return new ContactData(lastName, firstName)
             {
                 MiddleName = middleName,
                 Address = address,
@@ -160,7 +168,7 @@ namespace addressbook_web_tests
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
                     IWebElement lastName = cells[1];
                     IWebElement firstName = cells[2];
-                    
+
                     contactCache.Add(new ContactData(lastName.Text, firstName.Text)
                     {
                         Id = cells[0].FindElement(By.TagName("input")).GetAttribute("Id")

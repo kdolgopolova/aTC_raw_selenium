@@ -26,10 +26,9 @@ namespace addressbook_web_tests
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
             ContactData dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
 
-            Assert.AreEqual(dataFromEditForm, dataFromDetails);
-            Assert.AreEqual(dataFromEditForm.Address, dataFromDetails.Address);
-            Assert.AreEqual(dataFromEditForm.AllPhones, dataFromDetails.AllPhones);
-            Assert.AreEqual(dataFromEditForm.AllEmails, dataFromDetails.AllEmails);
+
+            Assert.AreEqual(dataFromEditForm.FullName, dataFromDetails.FullName);
+            Assert.AreEqual(dataFromEditForm.AllData, dataFromDetails.AllData);
 
         }
 

@@ -6,8 +6,9 @@ namespace addressbook_web_tests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
-
         private string allEmails;
+        private string fullName;
+        private string allData;
 
         public ContactData(string lastName, string firstName)
         {
@@ -33,7 +34,9 @@ namespace addressbook_web_tests
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string Nickname { get; set; }
         public string Company { get; set; }
+        public string Title { get; set; }
         public string Address { get; set; }
         public string Id { get; set; }
         public string HomePhone { get; set; }
@@ -78,6 +81,46 @@ namespace addressbook_web_tests
             set
             {
                 allEmails = value;
+            }
+        }
+
+        public string FullName 
+        {
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                else
+                {
+                    return Regex.Replace($"{FirstName} {MiddleName} {LastName}", @"\s+", "");
+                }
+            }
+
+            set
+            {
+                fullName = value;
+            }
+        }
+
+        public string AllData
+        {
+            get
+            {
+                if (allData != null)
+                {
+                    return allData;
+                }
+                else
+                {
+                    return Regex.Replace($"{FirstName}{MiddleName}{LastName}{Nickname}{Company}{Title}{Address}{AllPhones}{AllEmails}", @"\s+", "");
+                }
+            }
+
+            set
+            {
+                allData = value;
             }
         }
 
