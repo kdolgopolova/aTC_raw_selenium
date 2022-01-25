@@ -50,8 +50,6 @@ namespace addressbook_web_tests
             string email = allData[14];
             string email2 = allData[16];
             string email3 = allData[18];
-            string allPhones = $"{homePhone}\r\n{mobilePhone}\r\n{workPhone}";
-            string allEmails = $"{email}\r\n{email2}\r\n{email3}";
 
             return new ContactData(firstName, lastName)
             {
@@ -63,8 +61,6 @@ namespace addressbook_web_tests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
-                AllEmails = allEmails,
-                AllPhones = allPhones,
             };
         }
 
@@ -91,9 +87,6 @@ namespace addressbook_web_tests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            string allPhones = Regex.Replace($"{homePhone}\r\n{mobilePhone}\r\n{workPhone}", @"[() -]", "");
-            string allEmails = $"{email}\r\n{email2}\r\n{email3}";
-
             return new ContactData(firstName, lastName)
             {
                 MiddleName = middleName,
@@ -104,8 +97,6 @@ namespace addressbook_web_tests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
-                AllPhones = allPhones,
-                AllEmails = allEmails,
             };
         }
 

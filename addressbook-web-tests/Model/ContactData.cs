@@ -71,7 +71,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return $"{Email}\r\n{Email2}\r\n{Email3}".Trim();
+                    return (CleanUpEmails(Email) + CleanUpEmails(Email2) + CleanUpEmails(Email3)).Trim();
                 }
             }
 
@@ -81,16 +81,22 @@ namespace addressbook_web_tests
             }
         }
 
-        private string CleanUp(string phone)
+        private string CleanUp(string data)
         {
-            if (phone == null || phone == "")
+            if (data == null || data == "")
             {
                 return "";
             }
-            else
+            return Regex.Replace(data, "[ -()]", "") + "\r\n";
+        }
+
+        private string CleanUpEmails(string data)
+        {
+            if (data == null || data == "")
             {
-                return Regex.Replace(phone, "[ -{}]", "") + "\r\n";
+                return "";
             }
+            return data + "\r\n";
         }
 
         public bool Equals(ContactData contact)

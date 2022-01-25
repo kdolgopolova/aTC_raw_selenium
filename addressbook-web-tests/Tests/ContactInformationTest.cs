@@ -9,7 +9,7 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactInformation() 
         {
-            int indexToVerify = 5;
+            int indexToVerify = 1;
             ContactData dataFromTable = app.Contacts.GetContactInformationFromTable(indexToVerify);
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
 
@@ -22,7 +22,7 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactDetails()
         {
-            int indexToVerify = 5;
+            int indexToVerify = 1;
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
             ContactData dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
 
