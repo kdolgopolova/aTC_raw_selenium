@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     [TestFixture]
     public class GroupRemovalTests : AuthTestBase
@@ -26,7 +26,7 @@ namespace addressbook_web_tests
 
             Assert.AreEqual(oldGroups, newGroups);
             
-            foreach(GroupData group in newGroups)
+            foreach (GroupData group in newGroups)
             {
                 Assert.AreNotEqual(group.Id, groupToRemove.Id);
             }

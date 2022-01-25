@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
@@ -14,22 +14,22 @@ namespace addressbook_web_tests
 
             app.Contacts.AddUntilContactIsPresent(indexToModify);
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-            ContactData oldContactData = oldContacts[indexToModify-1];
+            ContactData oldContactData = oldContacts[indexToModify - 1];
 
             app.Contacts.Modify(indexToModify, contactData);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts[indexToModify-1].FirstName = contactData.FirstName;
-            oldContacts[indexToModify-1].LastName = contactData.LastName;
+            oldContacts[indexToModify - 1].FirstName = contactData.FirstName;
+            oldContacts[indexToModify - 1].LastName = contactData.LastName;
 
             oldContacts.Sort();
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
 
-            foreach(var contact in newContacts)
+            foreach (var contact in newContacts)
             {
                 if (contact.Id == oldContactData.Id)
                 {

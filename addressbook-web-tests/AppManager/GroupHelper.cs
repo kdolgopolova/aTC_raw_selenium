@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     public class GroupHelper : HelperBase
     {
@@ -56,7 +56,7 @@ namespace addressbook_web_tests
                     }
                     else 
                     {
-                        groupCache[i].Name = parts[i-shift].Trim();
+                        groupCache[i].Name = parts[i - shift].Trim();
                     }
                 }
                 

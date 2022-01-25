@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     public class LoginHelper : HelperBase
     {
@@ -27,12 +27,12 @@ namespace addressbook_web_tests
         public bool IsLoggedIn(AccountData accountData)
         {
             return IsLoggedIn()
-                && GetLoggedUserName() == accountData.Username ;
+                && GetLoggedUserName() == accountData.Username;
         }
 
         public string GetLoggedUserName()
         {
-            string text =  driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+            string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
             return text.Substring(1, text.Length - 2);
         }
 

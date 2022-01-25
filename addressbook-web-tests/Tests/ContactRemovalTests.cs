@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     [TestFixture]
     public class ContactRemovalTests : AuthTestBase
@@ -12,7 +12,7 @@ namespace addressbook_web_tests
             int indexToRemove = 4;
             app.Contacts.AddUntilContactIsPresent(indexToRemove);
 
-            List <ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
             ContactData contactToRemove = oldContacts[indexToRemove];
 
             app.Contacts.Remove(indexToRemove);

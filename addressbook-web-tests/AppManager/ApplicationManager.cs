@@ -6,7 +6,7 @@ using System.Management.Instrumentation;
 using System.Text;
 using System.Threading;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     public class ApplicationManager
     {
@@ -17,7 +17,7 @@ namespace addressbook_web_tests
         private NavigationHelper navigationHelper;
         private GroupHelper groupHelper;
         private ContactHelper contactHelper;
-        private static readonly ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+        private static readonly ThreadLocal<ApplicationManager> App = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
@@ -45,13 +45,13 @@ namespace addressbook_web_tests
 
         public static ApplicationManager GetInstance()
         {
-            if (!app.IsValueCreated)
+            if (!App.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
                 newInstance.Navigator.GoToHomePage();
-                app.Value = newInstance;
+                App.Value = newInstance;
             }
-            return app.Value;
+            return App.Value;
         }
 
         public LoginHelper Auth { get => loginHelper; set => loginHelper = value; }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace addressbook_web_tests
+namespace Addressbook_web_tests
 {
     [TestFixture]
     public class LogInTests : TestBase
