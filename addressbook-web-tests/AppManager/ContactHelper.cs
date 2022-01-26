@@ -25,7 +25,7 @@ namespace Addressbook_web_tests
             string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
-            return new ContactData(firstName, lastName)
+            return new ContactData(lastName, firstName)
             {
                 Address = address,
                 AllPhones = allPhones,
