@@ -40,38 +40,6 @@ namespace Addressbook_web_tests
             string allData = driver.FindElement(By.XPath("//div[@id='content']")).Text;
 
             return allData;
-            //allDataString = allDataString.Replace("H:", "");
-            //allDataString = allDataString.Replace("W:", "");
-            //allDataString = allDataString.Replace("M:", "");
-            //string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
-
-            //string[] fullName = allData[0].Split(' ').ToArray();
-            //string lastName = fullName.ElementAtOrDefault(2) == null ? " " : fullName[2];
-            //string middleName = fullName.ElementAtOrDefault(1) == null ? " " : fullName[1];
-            //string firstName = fullName.ElementAtOrDefault(0) == null ? " " : fullName[0];
-
-            //string address = allData.ElementAtOrDefault(2) == null ? "" : allData[2];
-
-            //string homePhone = allData.ElementAtOrDefault(6) == null ? "" : Regex.Replace(allData[6], @"[A-Za-z(): -]", "");
-            //string mobilePhone = allData.ElementAtOrDefault(8) == null ? "" : Regex.Replace(allData[8], @"[A-Za-z(): -]", "");
-            //string workPhone = allData.ElementAtOrDefault(10) == null ? "" : Regex.Replace(allData[10], @"[A-Za-z(): -]", "");
-
-            //string email = allData.ElementAtOrDefault(14) == null ? "" : allData[14];
-            //string email2 = allData.ElementAtOrDefault(16) == null ? "" : allData[16];
-            //string email3 = allData.ElementAtOrDefault(18) == null ? "" : allData[18];
-
-            //return new ContactData(lastName, firstName)
-            //{
-            //    MiddleName = middleName,
-            //    Address = address,
-            //    HomePhone = homePhone,
-            //    MobilePhone = mobilePhone,
-            //    WorkPhone = workPhone,
-            //    Email = email,
-            //    Email2 = email2,
-            //    Email3 = email3,
-            //    AllData = Regex.Replace(allDataString, @"[ \r\n ]", ""),
-            //};
         }
 
     public ContactHelper SelectContactProperties(int index)
