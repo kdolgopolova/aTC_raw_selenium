@@ -32,49 +32,51 @@ namespace Addressbook_web_tests
                 AllEmails = allEmails,
             };
         }
-        public ContactData GetContactInformationFromDetails(int index)
+        public string GetContactInformationFromDetails(int index)
         {
             manager.Navigator.GoToHomePage();
             SelectContactProperties(index);
 
-            string allDataString = driver.FindElement(By.CssSelector("div#content")).Text;
-            allDataString = allDataString.Replace("H:", "");
-            allDataString = allDataString.Replace("W:", "");
-            allDataString = allDataString.Replace("M:", "");
-            string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
+            string allData = driver.FindElement(By.XPath("//div[@id='content']")).Text;
 
-            string[] fullName = allData[0].Split(' ').ToArray();
-            string lastName = fullName.ElementAtOrDefault(2) == null ? " " : fullName[2];
-            string middleName = fullName.ElementAtOrDefault(1) == null ? " " : fullName[1];
-            string firstName = fullName.ElementAtOrDefault(0) == null ? " " : fullName[0];
+            return allData;
+            //allDataString = allDataString.Replace("H:", "");
+            //allDataString = allDataString.Replace("W:", "");
+            //allDataString = allDataString.Replace("M:", "");
+            //string[] allData = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
 
-            string address = allData.ElementAtOrDefault(2) == null ? "" : allData[2];
+            //string[] fullName = allData[0].Split(' ').ToArray();
+            //string lastName = fullName.ElementAtOrDefault(2) == null ? " " : fullName[2];
+            //string middleName = fullName.ElementAtOrDefault(1) == null ? " " : fullName[1];
+            //string firstName = fullName.ElementAtOrDefault(0) == null ? " " : fullName[0];
 
-            string homePhone = allData.ElementAtOrDefault(6) == null ? "" : Regex.Replace(allData[6], @"[A-Za-z(): -]", "");
-            string mobilePhone = allData.ElementAtOrDefault(8) == null ? "" : Regex.Replace(allData[8], @"[A-Za-z(): -]", "");
-            string workPhone = allData.ElementAtOrDefault(10) == null ? "" : Regex.Replace(allData[10], @"[A-Za-z(): -]", "");
+            //string address = allData.ElementAtOrDefault(2) == null ? "" : allData[2];
 
-            string email = allData.ElementAtOrDefault(14) == null ? "" : allData[14];
-            string email2 = allData.ElementAtOrDefault(16) == null ? "" : allData[16];
-            string email3 = allData.ElementAtOrDefault(18) == null ? "" : allData[18];
+            //string homePhone = allData.ElementAtOrDefault(6) == null ? "" : Regex.Replace(allData[6], @"[A-Za-z(): -]", "");
+            //string mobilePhone = allData.ElementAtOrDefault(8) == null ? "" : Regex.Replace(allData[8], @"[A-Za-z(): -]", "");
+            //string workPhone = allData.ElementAtOrDefault(10) == null ? "" : Regex.Replace(allData[10], @"[A-Za-z(): -]", "");
 
-            return new ContactData(lastName, firstName)
-            {
-                MiddleName = middleName,
-                Address = address,
-                HomePhone = homePhone,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone,
-                Email = email,
-                Email2 = email2,
-                Email3 = email3,
-                AllData = Regex.Replace(allDataString, @"[ \r\n ]", ""),
-            };
+            //string email = allData.ElementAtOrDefault(14) == null ? "" : allData[14];
+            //string email2 = allData.ElementAtOrDefault(16) == null ? "" : allData[16];
+            //string email3 = allData.ElementAtOrDefault(18) == null ? "" : allData[18];
+
+            //return new ContactData(lastName, firstName)
+            //{
+            //    MiddleName = middleName,
+            //    Address = address,
+            //    HomePhone = homePhone,
+            //    MobilePhone = mobilePhone,
+            //    WorkPhone = workPhone,
+            //    Email = email,
+            //    Email2 = email2,
+            //    Email3 = email3,
+            //    AllData = Regex.Replace(allDataString, @"[ \r\n ]", ""),
+            //};
         }
 
     public ContactHelper SelectContactProperties(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[7]")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 2}]/td[7]")).Click();
             return this;
         }
 
@@ -85,26 +87,52 @@ namespace Addressbook_web_tests
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string bday = driver.FindElement(By.Name("bday")).GetAttribute("value");
+            string bmonth = driver.FindElement(By.XPath("//div[@id='content']/form/select[2]/option[1]")).Text;
+            string byear = driver.FindElement(By.Name("byear")).GetAttribute("value");
+            string aday = driver.FindElement(By.Name("aday")).GetAttribute("value");
+            string amonth = driver.FindElement(By.XPath("//div[@id='content']/form/select[4]/option[1]")).Text;
+            string ayear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            string address2 = driver.FindElement(By.Name("address2")).Text;
+            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).Text;
 
-            return new ContactData(lastName, firstName)
+            return new ContactData(lastName.Trim(), firstName.Trim())
             {
                 MiddleName = middleName,
+                Nickname = nickName,
+                Company = company,
+                Title = title,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
+                Fax = fax,
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
+                Homepage = homepage,
+                BDay = bday,
+                BMonth = bmonth,
+                BYear = byear,
+                ADay = aday,
+                AMonth = amonth,
+                AYear = ayear,
+                Address2 = address2,
+                Phone2 = phone2,
+                Notes = notes
             };
         }
 
@@ -195,7 +223,7 @@ namespace Addressbook_web_tests
 
         private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[8]")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 2}]/td[8]")).Click();
             return this;
         }
 

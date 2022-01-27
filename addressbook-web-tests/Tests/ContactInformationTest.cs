@@ -22,13 +22,12 @@ namespace Addressbook_web_tests
         [Test]
         public void TestContactDetails()
         {
-            int indexToVerify = 1;
+            int indexToVerify = 0;
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
-            ContactData dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
+            string dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
 
 
-            Assert.AreEqual(dataFromEditForm.FullName, dataFromDetails.FullName);
-            Assert.AreEqual(dataFromEditForm.AllData, dataFromDetails.AllData);
+            CollectionAssert.AreEqual(dataFromEditForm.AllData, dataFromDetails);
 
         }
 
