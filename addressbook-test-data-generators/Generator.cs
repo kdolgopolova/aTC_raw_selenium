@@ -28,24 +28,26 @@ namespace addressbook_test_data_generators
                         Footer = TestBase.GenerateRandomString(10),
                     });
                 }
-                if (format == "csv")
+
+                switch (format) 
                 {
-                    WriteGroupsToCsvFile(groups, writer);
+                    case "csv":
+                        WriteGroupsToCsvFile(groups, writer);
+                        break;
+                    case "xml":
+                        WriteGroupsToXMLFile(groups, writer);
+                        break;
+                    case "json":
+                        WriteGroupsToJsonFile(groups, writer);
+                        break;
+                    default:
+                        Console.Out.Write($"Unrecognized format {format}");
+                        break;
                 }
-                else if (format == "xml")
-                {
-                    WriteGroupsToXMLFile(groups, writer);
-                }
-                else if (format == "json")
-                {
-                    WriteGroupsToJsonFile(groups, writer);
-                }
-                else
-                {
-                    Console.Out.Write($"Unrecognized format {format}");
-                }
+
                 writer.Close();
             }
+
             else if (dataType == "contacts")
             {
                 List<ContactData> contacts = new List<ContactData>();
@@ -60,23 +62,23 @@ namespace addressbook_test_data_generators
                     });
                 }
 
-                if (format == "xml")
+                switch (format)
                 {
-                    WriteContactsToXmlFile(contacts, writer);
-                }
-                else
-                {
-                    if (format == "json")
-                    {
+                    case "xml":
+                        WriteContactsToXmlFile(contacts, writer);
+                        break;
+                    case "json":
                         WriteContactsToJsonile(contacts, writer);
-                    }
-
-                    else
-                    {
+                        break;
+                    default:
                         Console.Out.Write($"Unrecognized format {format}");
-                    }
-                    writer.Close();
+                        break;
                 }
+                    writer.Close();
+            }
+            else
+            {
+                Console.Out.Write($"Unrecognized dataType {dataType}");
             }
         }
         static void WriteGroupsToCsvFile(List<GroupData> groups, StreamWriter writer) 
