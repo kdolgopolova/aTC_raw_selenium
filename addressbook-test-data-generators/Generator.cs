@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace addressbook_test_data_generators
 {
@@ -13,8 +14,8 @@ namespace addressbook_test_data_generators
         static void Main(string[] args)
         {
             string dataType = args[0];
-            int count = Convert.ToInt32(args[1]);
-            StreamWriter writer = new StreamWriter(args[2]);
+            int count = Convert.ToInt32(args[1]); 
+            string fileName = args[2];
             string format = args[3];
 
             if (dataType == "groups")
@@ -28,28 +29,36 @@ namespace addressbook_test_data_generators
                         Footer = TestBase.GenerateRandomString(10),
                     });
                 }
-
-                switch (format) 
+                if (format == "excel")
                 {
-                    case "csv":
-                        WriteGroupsToCsvFile(groups, writer);
-                        break;
-                    case "xml":
-                        WriteGroupsToXMLFile(groups, writer);
-                        break;
-                    case "json":
-                        WriteGroupsToJsonFile(groups, writer);
-                        break;
-                    default:
-                        Console.Out.Write($"Unrecognized format {format}");
-                        break;
+                    WriteGroupsToExcelFile(groups, fileName);
                 }
+                else 
+                {
+                    StreamWriter writer = new StreamWriter(fileName);
 
-                writer.Close();
+                    switch (format)
+                    {
+                        case "csv":
+                            WriteGroupsToCsvFile(groups, writer);
+                            break;
+                        case "xml":
+                            WriteGroupsToXMLFile(groups, writer);
+                            break;
+                        case "json":
+                            WriteGroupsToJsonFile(groups, writer);
+                            break;
+                        default:
+                            Console.Out.Write($"Unrecognized format {format}");
+                            break;
+                    }
+                    writer.Close();
+                }
             }
 
             else if (dataType == "contacts")
             {
+                StreamWriter writer = new StreamWriter(fileName);
                 List<ContactData> contacts = new List<ContactData>();
                 for (int i = 0; i < count; i++)
                 {
@@ -81,6 +90,7 @@ namespace addressbook_test_data_generators
                 Console.Out.Write($"Unrecognized dataType {dataType}");
             }
         }
+
         static void WriteGroupsToCsvFile(List<GroupData> groups, StreamWriter writer) 
         { 
             foreach(var group in groups)
@@ -107,6 +117,31 @@ namespace addressbook_test_data_generators
         static void WriteContactsToJsonile(List<ContactData> contacts, StreamWriter writer)
         {
             writer.Write(JsonConvert.SerializeObject(contacts, Newtonsoft.Json.Formatting.Indented));
+        }
+
+
+        static void WriteGroupsToExcelFile(List<GroupData> groups, string filename)
+        {
+            Excel.Application app = new Excel.Application();
+            app.Visible = true;
+            Excel.Workbook wb = app.Workbooks.Add();
+            Excel.Worksheet sheet = wb.ActiveSheet;
+            sheet.Cells[1, 1] = "test";
+
+            int row = 1;
+            foreach(GroupData group in groups)
+            {
+                sheet.Cells[row, 1] = group.Name;
+                sheet.Cells[row, 2] = group.Header;
+                sheet.Cells[row, 3] = group.Footer;
+                row++;
+            }
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            File.Delete(fullPath);
+            wb.SaveAs(Path.Combine(Directory.GetCurrentDirectory(), filename));
+            wb.Close();
+            app.Visible = false;
+            app.Quit();
         }
     }
 }
