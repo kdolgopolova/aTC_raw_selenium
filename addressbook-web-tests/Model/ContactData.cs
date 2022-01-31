@@ -21,6 +21,9 @@ namespace Addressbook_web_tests
             FirstName = firstName;
             LastName = lastName;
         }
+        public ContactData()
+        {
+        }
 
         public ContactData(string firstName, string middleName, string lastName, string company)
         {
@@ -65,6 +68,7 @@ namespace Addressbook_web_tests
 
         public string GetAge(string day, string month, string year, string fieldName)
         {
+            if (day == null) return null;
             int userMonth;
             int Age;
 
@@ -173,6 +177,7 @@ namespace Addressbook_web_tests
         }
         public string GetAnniversary(string day, string month, string year, string fieldName)
         {
+            if (day == null) return null;
             int Anniversary;
             if (year != "")
                 Anniversary = DateTime.Now.Year - Int32.Parse(year);
@@ -520,6 +525,7 @@ namespace Addressbook_web_tests
         {
             get
             {
+                if (Address2 == null) return null;
                 string secondaryBlock = "";
                 if (Address2.Trim() != null && Address2.Trim() != "")
                 {

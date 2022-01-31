@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContactData>
+    <FirstName>OO</FirstName>
+    <MiddleName>)</MiddleName>
+    <LastName> 3?-J</LastName>
+    <Nickname>&amp;,8</Nickname>
+    <Address>U]</Address>
+    <MobilePhone />
+    <AllData>OO ) 3?-J
+&amp;,8
+U]</AllData>
+    <FullNameNicknameblock>OO ) 3?-J
+&amp;,8</FullNameNicknameblock>
+    <TitleCompAddrBlock>U]</TitleCompAddrBlock>
+    <PhonesBlock />
+    <EmailHomepageBlock />
+    <BirthAnnivBlock />
+    <AllPhones />
+    <AllEmails />
+    <FullName>OO)3?-J</FullName>
+  </ContactData>
+  <ContactData>
+    <FirstName>Q-X"</FirstName>
+    <MiddleName>Y6&amp;</MiddleName>
+    <LastName>Q</LastName>
+    <Nickname>=#</Nickname>
+    <Address>PAJV</Address>
+    <MobilePhone>+</MobilePhone>
+    <AllData>Q-X" Y6&amp; Q
+=#
+PAJV
+
+M: +</AllData>
+    <FullNameNicknameblock>Q-X" Y6&amp; Q
+=#</FullNameNicknameblock>
+    <TitleCompAddrBlock>PAJV</TitleCompAddrBlock>
+    <PhonesBlock>M: +</PhonesBlock>
+    <EmailHomepageBlock />
+    <BirthAnnivBlock />
+    <AllPhones>+</AllPhones>
+    <AllEmails />
+    <FullName>Q-X"Y6&amp;Q</FullName>
+  </ContactData>
+</ArrayOfContactData>

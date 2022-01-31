@@ -15,6 +15,8 @@ namespace Addressbook_web_tests
             this.name = name;
         }
 
+        public GroupData() { }
+ 
         public GroupData(string name, string header, string footer)
         {
             this.name = name;

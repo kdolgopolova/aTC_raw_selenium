@@ -191,7 +191,7 @@ namespace Addressbook_web_tests
 
         private ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 2}]/td[8]")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[8]")).Click();
             return this;
         }
 

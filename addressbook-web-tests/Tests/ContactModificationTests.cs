@@ -10,7 +10,7 @@ namespace Addressbook_web_tests
         public void ContactModificationTest()
         {
             ContactData contactData = new ContactData("Automatically", "Changed");
-            int indexToModify = 4;
+            int indexToModify = 1;
 
             app.Contacts.AddUntilContactIsPresent(indexToModify);
             List<ContactData> oldContacts = app.Contacts.GetContactList();

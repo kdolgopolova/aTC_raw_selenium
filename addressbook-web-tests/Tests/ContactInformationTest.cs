@@ -22,7 +22,7 @@ namespace Addressbook_web_tests
         [Test]
         public void TestContactDetails()
         {
-            int indexToVerify = 0;
+            int indexToVerify = 1;
             ContactData dataFromEditForm = app.Contacts.GetContactInformationFromForm(indexToVerify);
             string dataFromDetails = app.Contacts.GetContactInformationFromDetails(indexToVerify);
 
