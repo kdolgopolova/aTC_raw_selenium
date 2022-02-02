@@ -97,7 +97,7 @@ namespace Addressbook_web_tests
             var a = GroupData.GetAll()[0].GetContacts();
             foreach (ContactData contact in a)
             {
-                System.Console.Out.WriteLine(contact.ToString());
+                System.Console.Out.WriteLine(contact.Deprecated);
             }
         }
     }

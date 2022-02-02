@@ -76,6 +76,9 @@ namespace Addressbook_web_tests
         public string Phone2 { get; set; }
         public string Notes { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public string GetAge(string day, string month, string year, string fieldName)
         {
             if (day == null) return null;
@@ -757,7 +760,7 @@ namespace Addressbook_web_tests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from c in db.Contacts select c).ToList();
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             };
         }
     }
