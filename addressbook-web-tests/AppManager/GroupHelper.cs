@@ -76,6 +76,17 @@ namespace Addressbook_web_tests
             return this;
         }
 
+        internal GroupHelper Modify(GroupData oldData, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(oldData.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         private GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -95,6 +106,20 @@ namespace Addressbook_web_tests
             SelectGroup(a);
             RemoveGroup();
             ReturnToGroupsPage();
+            return this;
+        }
+        public GroupHelper Remove(GroupData toBeRemoved)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(toBeRemoved.Id);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        private GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath($"//input[@name='selected[]' and @value='"+id+"']")).Click();
             return this;
         }
 

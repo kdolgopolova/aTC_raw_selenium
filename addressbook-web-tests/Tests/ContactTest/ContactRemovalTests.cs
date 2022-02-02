@@ -4,24 +4,24 @@ using System.Collections.Generic;
 namespace Addressbook_web_tests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
         {
-            int indexToRemove = 4;
+            int indexToRemove = 1;
             app.Contacts.AddUntilContactIsPresent(indexToRemove);
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-            ContactData contactToRemove = oldContacts[indexToRemove];
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData contactToRemove = oldContacts[indexToRemove-1];
 
-            app.Contacts.Remove(indexToRemove);
+            app.Contacts.Remove(contactToRemove);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
-            oldContacts.RemoveAt(indexToRemove);
+            oldContacts.Remove(contactToRemove);
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             Assert.AreEqual(oldContacts, newContacts);
 

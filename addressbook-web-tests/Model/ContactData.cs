@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
+using System.Linq;
 
 namespace Addressbook_web_tests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
@@ -40,10 +44,16 @@ namespace Addressbook_web_tests
             LastName = lastName;
         }
 
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
+
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
+
+        [Column(Name = "id"), PrimaryKey]
         public string Id { get; set; }
+
+        public string MiddleName { get; set; }
         public string Nickname { get; set; }
         public string Title { get; set; }
         public string Company { get; set; }
@@ -330,7 +340,7 @@ namespace Addressbook_web_tests
                 {
                     if (ReturnFullName(FirstName.Trim(), MiddleName.Trim(), LastName.Trim()) != "")
                     {
-                        if (Nickname != "") 
+                        if (Nickname != "")
                         {
                             return (ReturnFullName(FirstName.Trim(), MiddleName.Trim(), LastName.Trim()) + "\r\n" + Nickname.Trim());
                         }
@@ -630,117 +640,125 @@ namespace Addressbook_web_tests
 
             return FullName;
         }
-    
+
 
         public string AllPhones
-    {
-        get
         {
-            if (allPhones != null)
+            get
             {
-                return allPhones;
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
             }
-            else
-            {
-                return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
-            }
-        }
 
-        set
-        {
-            allPhones = value;
-        }
-    }
-    public string AllEmails
-    {
-        get
-        {
-            if (allEmails != null)
+            set
             {
-                return allEmails;
-            }
-            else
-            {
-                return (CleanUpEmails(Email) + CleanUpEmails(Email2) + CleanUpEmails(Email3)).Trim();
+                allPhones = value;
             }
         }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (CleanUpEmails(Email) + CleanUpEmails(Email2) + CleanUpEmails(Email3)).Trim();
+                }
+            }
 
-        set
-        {
-            allEmails = value;
-        }
-    }
-
-    public string FullName
-    {
-        get
-        {
-            if (fullName != null)
+            set
             {
-                return fullName;
-            }
-            else
-            {
-                return Regex.Replace($"{FirstName} {MiddleName} {LastName}", @"\s+", "");
+                allEmails = value;
             }
         }
 
-        set
+        public string FullName
         {
-            fullName = value;
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                else
+                {
+                    return Regex.Replace($"{FirstName} {MiddleName} {LastName}", @"\s+", "");
+                }
+            }
+
+            set
+            {
+                fullName = value;
+            }
+        }
+
+        private string CleanUp(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+            return Regex.Replace(data, "[ -()]", "") + "\r\n";
+        }
+
+        private string CleanUpEmails(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+            return data + "\r\n";
+        }
+
+        public bool Equals(ContactData contact)
+        {
+            if (contact is null)
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, contact))
+            {
+                return true;
+            }
+            return FirstName == contact.FirstName & LastName == contact.LastName;
+        }
+
+        public override int GetHashCode()
+        {
+            return FirstName.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Last Name: {LastName}, First Name: {FirstName}";
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (other is null)
+            {
+                return 1;
+            }
+            string expected = $"{LastName} {FirstName}";
+            string actual = $"{other.LastName} {other.FirstName}";
+            return expected.CompareTo(actual);
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            };
         }
     }
-
-    private string CleanUp(string data)
-    {
-        if (data == null || data == "")
-        {
-            return "";
-        }
-        return Regex.Replace(data, "[ -()]", "") + "\r\n";
-    }
-
-    private string CleanUpEmails(string data)
-    {
-        if (data == null || data == "")
-        {
-            return "";
-        }
-        return data + "\r\n";
-    }
-
-    public bool Equals(ContactData contact)
-    {
-        if (contact is null)
-        {
-            return false;
-        }
-        if (Object.ReferenceEquals(this, contact))
-        {
-            return true;
-        }
-        return FirstName == contact.FirstName & LastName == contact.LastName;
-    }
-
-    public override int GetHashCode()
-    {
-        return FirstName.GetHashCode();
-    }
-
-    public override string ToString()
-    {
-        return $"Last Name: {LastName}, First Name: {FirstName}";
-    }
-
-    public int CompareTo(ContactData other)
-    {
-        if (other is null)
-        {
-            return 1;
-        }
-        string expected = $"{LastName} {FirstName}";
-        string actual = $"{other.LastName} {other.FirstName}";
-        return expected.CompareTo(actual);
-    }
-}
 }

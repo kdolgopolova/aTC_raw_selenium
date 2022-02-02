@@ -32,6 +32,12 @@ namespace Addressbook_web_tests
                 AllEmails = allEmails,
             };
         }
+
+        internal void AddContactToGroup(ContactData contacts, GroupData group)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetContactInformationFromDetails(int index)
         {
             manager.Navigator.GoToHomePage();
@@ -136,6 +142,13 @@ namespace Addressbook_web_tests
             RemoveContact();
             return this;
         }
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            return this;
+        }
 
         private ContactHelper UpdateContact()
         {
@@ -147,6 +160,12 @@ namespace Addressbook_web_tests
         private ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 2}]/td")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
             return this;
         }
 

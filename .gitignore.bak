@@ -369,4 +369,4 @@ MigrationBackup/
 *.nuget.targets
 *.ttinclude
 *.config
-**/LinqToDB.Templates/
+

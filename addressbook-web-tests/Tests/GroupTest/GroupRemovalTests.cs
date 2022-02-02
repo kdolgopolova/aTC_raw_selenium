@@ -4,25 +4,25 @@ using System.Collections.Generic;
 namespace Addressbook_web_tests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
        
         [Test]
         public void GroupRemovalTest()
         {
-            int indexToRemove = 7;
+            int indexToRemove = 1;
             app.Groups.AddUntilGroupIsPresent(indexToRemove);
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData groupToRemove = oldGroups[indexToRemove];
 
-            app.Groups.Remove(indexToRemove);
+            app.Groups.Remove(groupToRemove);
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
             oldGroups.RemoveAt(indexToRemove);
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
             Assert.AreEqual(oldGroups, newGroups);
             
