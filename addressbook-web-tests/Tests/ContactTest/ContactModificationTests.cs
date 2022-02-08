@@ -9,7 +9,7 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData contactData = new ContactData("Automatically", "Changed");
+            ContactData newContactData = new ContactData("Automatically", "Changed");
             int indexToModify = 1;
 
             app.Contacts.AddUntilContactIsPresent(indexToModify);
@@ -17,13 +17,13 @@ namespace Addressbook_web_tests
             List<ContactData> oldContacts = ContactData.GetAll();
             ContactData oldContactData = oldContacts[indexToModify - 1];
 
-            app.Contacts.Modify(indexToModify, contactData);
+            app.Contacts.Modify(oldContactData, newContactData);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = ContactData.GetAll();
-            oldContacts[indexToModify - 1].FirstName = contactData.FirstName;
-            oldContacts[indexToModify - 1].LastName = contactData.LastName;
+            oldContacts[indexToModify - 1].FirstName = newContactData.FirstName;
+            oldContacts[indexToModify - 1].LastName = newContactData.LastName;
 
             oldContacts.Sort();
             newContacts.Sort();
@@ -34,7 +34,7 @@ namespace Addressbook_web_tests
             {
                 if (contact.Id == oldContactData.Id)
                 {
-                    Assert.AreEqual($"{contactData.LastName} {contactData.FirstName}", $"{contact.LastName} {contact.FirstName}");
+                    Assert.AreEqual($"{newContactData.LastName} {newContactData.FirstName}", $"{contact.LastName} {contact.FirstName}");
                 }
             }
         }

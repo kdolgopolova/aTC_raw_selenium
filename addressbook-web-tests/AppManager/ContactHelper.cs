@@ -176,6 +176,23 @@ namespace Addressbook_web_tests
             return this;
         }
 
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            InitContactModification(contact.Id);
+            FillContactForm(newData);
+            UpdateContact();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        private ContactHelper InitContactModification(string id)
+        {
+            driver.FindElement(By.XPath("//tr[./td[./input[@name='selected[]' and @value='" + id + "']]]"))
+               .FindElement(By.XPath(".//img[@alt='Edit']")).Click();
+
+            return this;
+        }
+
         public ContactHelper Remove(int a)
         {
             manager.Navigator.GoToHomePage();
